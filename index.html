@@ -17,24 +17,24 @@
 
   <!-- Core Meta Data -->
   <meta name="author" content="Rafaell Lycan">
-  <meta name="description" content="Simple, lightweight Parallax Engine that reacts to the orientation of a smart device">
+  <meta name="description" content="Simple, music player build with html5, javascript and love <3">
   <meta name="keywords" content="music player,player html5,player js,plugin">
 
   <!-- Open Graph Meta Data -->
-  <meta property="og:description" content="Simple, lightweight Parallax Engine that reacts to the orientation of a smart device">
-  <meta property="og:image" content="http://wagerfield.github.io/parallax/assets/images/thumbnail.png">
-  <meta property="og:site_name" content="parallax.js">
-  <meta property="og:title" content="parallax.js">
+  <meta property="og:description" content="Simple, music player build with html5, javascript and love <3">
+  <meta property="og:image" content="">
+  <meta property="og:site_name" content="Music Player">
+  <meta property="og:title" content="Music Player">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://wagerfield.github.io/parallax/index.html">
+  <meta property="og:url" content="">
 
   <!-- Twitter Card Meta Data -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="http://wagerfield.github.io/parallax/index.html">
-  <meta name="twitter:creator" content="@mwagerfield">
-  <meta name="twitter:title" content="parallax.js">
-  <meta name="twitter:description" content="Simple, lightweight Parallax Engine that reacts to the orientation of a smart device">
-  <meta name="twitter:image" content="http://wagerfield.github.io/parallax/assets/images/thumbnail.png">
+  <meta name="twitter:site" content="">
+  <meta name="twitter:creator" content="@RafaellLycan">
+  <meta name="twitter:title" content="Music Player">
+  <meta name="twitter:description" content="Simple, music player build with html5, javascript and love <3">
+  <meta name="twitter:image" content="">
 
   <!-- Humans -->
   <link rel="author" href="humans.txt" />
@@ -54,7 +54,37 @@
 
 </head>
 <body>
-    Musics Like:
-    Radioactive - Imagine Dragons , Save Me - Remy Zero, Too Close - Alex Clare
+    <h1>Music Like:</h1>
+
+    <!-- Playlist -->
+    <ul>
+      <li><a href="sounds/Radioactive - Imagine Dragons.mp3">Radioactive - Imagine Dragons</a></li>
+      <li><a href="sounds/Alex Clare - Too Close.mp3">Alex Clare - Too Close</a></li>
+      <li><a href="sounds/Shoot to thrill - ACDC.mp3">Shoot to thrill - AC/DC</a></li>
+      <li><a href="sounds/2.mp3">Save Me - Remy Zero</a></li>
+    </ul>
+
+    <!-- Player -->
+    <audio id="player" preload="auto" autoplay autobuffer ontimeupdate="getTime()">
+      <source src="sounds/Radioactive - Imagine Dragons.mp3" type="audio/mpeg">
+      <!-- <source src="sounds/.ogg" type="audio/ogg"> -->
+      Your browser does not support HTML5 audio, Download
+      <a href="sounds/Radioactive - Imagine Dragons.mp3">Radioactive - Imagine Dragons</a>
+    </audio>
+
+    <!-- Progress Bar -->
+    <progress max="0" value="0"></progress> <br><br>
+
+    <!-- Controls -->
+    <button type="button" onclick="play()">Play</button>
+    <button type="button" onclick="pause()">Pause</button>
+    <button onclick="document.getElementById('player').muted=!document.getElementById('player').muted">Mute</button>
+    <input type="text" name="timer" id="timer" onkeypress="capturaTecla(event)">
+    <button type="button" onclick="jumpTo()">Pular para</button>
+
+    <!-- Timer -->
+    <p id="progresso">0 / 0</p>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
