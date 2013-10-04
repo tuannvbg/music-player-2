@@ -57,11 +57,7 @@
     <h1>Music Like:</h1>
 
     <!-- Playlist -->
-    <ul>
-      <li><a href="sounds/Radioactive - Imagine Dragons.mp3">Radioactive - Imagine Dragons</a></li>
-      <li><a href="sounds/Alex Clare - Too Close.mp3">Alex Clare - Too Close</a></li>
-      <li><a href="sounds/Shoot to thrill - ACDC.mp3">Shoot to thrill - AC/DC</a></li>
-      <li><a href="sounds/2.mp3">Save Me - Remy Zero</a></li>
+    <ul id="playlist">
     </ul>
 
     <!-- Player -->
@@ -78,8 +74,10 @@
     <!-- Controls -->
     <button type="button" onclick="play()">Play</button>
     <button type="button" onclick="pause()">Pause</button>
-    <button onclick="document.getElementById('player').muted=!document.getElementById('player').muted">Mute</button>
-    <input type="text" name="timer" id="timer" onkeypress="capturaTecla(event)">
+    <button type="button" onclick="next()">Next</button>
+    <button type="button" onclick="prev()">Prev</button>
+    <button onclick="document.getElementById('player').muted=!document.getElementById('player').muted">Mute</button><br>
+    <input type="text" name="timer" id="timer" onkeypress="capturaTecla(event)" placeholder="insira segundos"> <br>
     <button type="button" onclick="jumpTo()">Pular para</button>
 
     <!-- Timer -->

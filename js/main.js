@@ -12,7 +12,13 @@
 var player = document.getElementById('player');
 var tempo = document.getElementById('timer');
 var progresso = document.getElementById('progresso');
-var playlist = document.querySelectorAll('li');
+var folder = "sounds/";
+var playlist = [
+        "Radioactive - Imagine Dragons.mp3",
+        "Alex Clare - Too Close.mp3",
+        "Shoot to thrill - ACDC.mp3"
+      ];
+var currentSong = 0;
 
 //CONTROLS
 function play(){
@@ -38,6 +44,13 @@ function getTime(){
     bar.setAttribute("value",atual);
     progresso.innerHTML = timer(atual) + ' / ' + timer(total) ;
   }
+  /*audio[0].addEventListener('ended',function(e){
+      current++;
+      if(current < len){
+        link = playlist.find('a')[current];
+        run($(link),audio[0]);
+      }
+  });*/
 }
 function timer(time){
   m = parseInt((time / 60) % 60);
@@ -86,8 +99,6 @@ function capturaTecla(event){
 }
 window.onkeypress = function(key){
   key = key.keyCode;
-  // if (key == 32) {  };
-  // console.log(key);
   switch(key){
     case 32 : // Space
       player.paused?play():pause();
@@ -98,68 +109,43 @@ window.onkeypress = function(key){
 }
 
 function next(){
-  player.src = "sounds/Shoot to thrill - ACDC.mp3";
+  var current = player.childNodes[1].getAttribute('src');
+  var music = playlist[currentSong];
+
+  if(currentSong < playlist.length -1){
+    currentSong++;
+  }else{
+    currentSong = 0;
+  }
+  music = folder + playlist[currentSong];
+  player.src = music;
   player.load();
   player.play();
+}
+function prev(){
+  var current = player.childNodes[1].getAttribute('src');
+  var music = playlist[currentSong];
 
-/*var i=1;
-var nextSong= "";
-function setup() {
-  document.getElementById('audio').addEventListener('ended', function(){
-    i++
-    nextSong = "Music/"+i+".mp3";
-    audioPlayer.src = nextSong;
-    audioPLayer.load();
-    audioPlayer.play();
-    if(i == 37) // this is the end of the songs.
-    {
-        i = 1;
-    }
-    }, false);
-  }*/
+  if(currentSong > 0){
+    currentSong--;
+  }else{
+    currentSong = playlist.length -1;
+  }
+  music = folder + playlist[currentSong];
+  player.src = music;
+  player.load();
+  player.play();
 }
 
-function playlist(){
+function loadPlaylist(){
+  var list = document.getElementById('playlist');
+  for (var i = 0; i < playlist.length; i++) {
+    var item = document.createElement('li');
+    item.appendChild(document.createTextNode(i+1+" - "+
+      playlist[i].replace('.mp3','')
+      )
+    );
+    list.appendChild(item);
+  }
 }
-/*var audio;
-var playlist;
-var tracks;
-var current;
-
-init();
-function init(){
-    current = 0;
-    audio = $('#audio');
-    playlist = $('#playlist');
-    tracks = playlist.find('li a');
-    len = tracks.length - 1;
-    audio[0].volume = .10;
-    audio[0].play();
-    playlist.find('a').click(function(e){
-        e.preventDefault();
-        link = $(this);
-        current = link.parent().index();
-        run(link, audio[0]);
-    });
-    audio[0].addEventListener('ended',function(e){
-        current++;
-        if(current == len){
-            current = 0;
-            link = playlist.find('a')[0];
-        }else{
-            link = playlist.find('a')[current];
-        }
-        run($(link),audio[0]);
-    });
-}
-function run(link, player){
-        player.src = link.attr('href');
-        par = link.parent();
-        par.addClass('active').siblings().removeClass('active');
-        audio[0].load();
-        audio[0].play();
-} */
-playlist.click = function(){
-  conslog.log('log');
-  return false;
-}
+window.onload = loadPlaylist();
