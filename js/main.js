@@ -29,10 +29,20 @@ var musicPlayer = {
   currentCover: "",
   endTime: "",
   totalTracks: "",
+  codecType: [],
   playing: false,
   init: function(){
 
     that = this;
+
+    // Check the codec type
+    if (this.player.canPlayType('audio/mpeg;')) {
+      this.codecType["codec"] = 'audio/mpeg';
+      this.codecType["format"] = "mp3";
+    } else {
+      this.codecType["codec"] = 'audio/ogg';
+      this.codecType["format"] = "ogg";
+    }
 
     // Read lenght of music
     $(this.player).bind('timeupdate',function(){
@@ -138,7 +148,8 @@ var musicPlayer = {
 
     // Convert musicName to lowercase and add '-' into whitespaces and change src on audio player
     url = playlist[i].trackname.replace(/ /g,"-").replace("'","").toLowerCase();
-    this.player.src = "sounds/"+url+".mp3";
+    this.player.src = "sounds/"+url+"."+this.codecType['format'];
+    this.player.type = this.codecType['codec'];
 
     // Format url from Album covers and set CurrentCover URL
     cover = "img/covers/"+playlist[i].cover;
@@ -149,7 +160,7 @@ var musicPlayer = {
     $('.music-info').html(this.musicInfo); //Artist and album
     $('.cover img').attr("alt", this.musicName+" - "+playlist[i].artist); // Cover info
     $(".cover img").attr("src",this.currentCover).hide().fadeIn(1000); // Cover image
-    $(".bgCover").attr("style","background-image: url("+this.currentCover+");").hide().show(); // Background
+    $(".bgCover").attr("style","background-image: url("+this.currentCover+");").hide().fadeIn(300); // Background
 
     this.player.load();
     this.play();
