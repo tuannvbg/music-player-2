@@ -40,7 +40,9 @@
   <link rel="author" href="humans.txt" />
 
   <!-- Styles -->
-  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="stylesheet" href="css/normalizer.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700">
+  <link rel="stylesheet" href="css/style.css"/>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -54,35 +56,52 @@
 
 </head>
 <body>
-    <h1>Music Like:</h1>
+  <div class="bgCover"></div>
 
-    <!-- Playlist -->
-    <ul id="playlist">
+  <header>
+    <div class="menu-button btn-opacity">
+    </div>
+    <div class="search-button btn-opacity">
+    </div>
+  </header>
+  <nav class="menu">
+    <h2>Playlist</h2>
+    <span class="close btn-opacity"><img src="img/menu-close-icon.png" height="36" width="36" alt=""></span>
+    <ul>
     </ul>
+  </nav>
+  <div class="main">
+    <div class="player">
 
-    <!-- Player -->
-    <audio id="player" preload="auto" autoplay autobuffer ontimeupdate="getTime()">
-      <source src="sounds/Radioactive - Imagine Dragons.mp3" type="audio/mpeg">
-      <!-- <source src="sounds/.ogg" type="audio/ogg"> -->
-      Your browser does not support HTML5 audio, Download
-      <a href="sounds/Radioactive - Imagine Dragons.mp3">Radioactive - Imagine Dragons</a>
-    </audio>
+      <figure class="cover">
+        <img src="" alt="">
+      </figure>
 
-    <!-- Progress Bar -->
-    <progress max="0" value="0"></progress> <br><br>
+      <audio preload="auto" autobuffer src="">
+        Your browser does not support HTML5 audio, <a href="www.google.com/chrome/‎" target="_blank">Download Google Chrome!</a>
+      </audio>
 
-    <!-- Controls -->
-    <button type="button" onclick="play()">Play</button>
-    <button type="button" onclick="pause()">Pause</button>
-    <button type="button" onclick="next()">Next</button>
-    <button type="button" onclick="prev()">Prev</button>
-    <button onclick="document.getElementById('player').muted=!document.getElementById('player').muted">Mute</button><br>
-    <input type="text" name="timer" id="timer" onkeypress="capturaTecla(event)" placeholder="insira segundos"> <br>
-    <button type="button" onclick="jumpTo()">Pular para</button>
+      <div class="info">
+        <h2 class="music-name"></h2>
+        <h4 class="music-info"></h4>
+      </div>
 
-    <!-- Timer -->
-    <p id="progresso">0 / 0</p>
+      <div class="controlers">
+        <div class="prev btn-opacity"> Prev </div>
+        <div class="next btn-opacity"> Next </div>
+        <div class="play paused btn-opacity"> Play </div>
+      </div>
 
+      <div class="progress">
+        <div class="time-current"></div>
+        <input type="range" name="progress" id="progress" value="0" min="0" max="">
+        <div class="time-end"></div>
+      </div>
+
+    </div>
+  </div>
+
+    <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

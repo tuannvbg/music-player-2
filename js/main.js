@@ -1,85 +1,177 @@
 /*
-  ### Music Player v0.1 ###
+  ### Music Player v0.5 ###
   Document    : main.js
   Author      : Rafaell Lycan
   Summary     :
-      | Controls (Play, Pause)
-      | JumpTo
-      | window.ready and window.load
+      | Playlist
+      | Player
+      | Aside menu Toggle(show/hide)
 */
 
-// VARIABLES
-var player = document.getElementById('player');
-var tempo = document.getElementById('timer');
-var progresso = document.getElementById('progresso');
-var folder = "sounds/";
 var playlist = [
-        "Radioactive - Imagine Dragons.mp3",
-        "Alex Clare - Too Close.mp3",
-        "Shoot to thrill - ACDC.mp3"
-      ];
-var currentSong = 0;
+  { trackname:"Radioactive", artist:"Imagine Dragons", album:"Continued Silence EP", cover: "imagine-dragons-ep-cover-300x300.jpg"},
+  { trackname:"Too Close", artist:"Alex Clare", album:"The Lateness of the Hour", cover: "alex-clare-too-close.jpg"},
+  { trackname:"Shoot to thrill", artist:"AC/DC", album:"Back in Black", cover: "backinblack_300.jpg"},
+  { trackname:"Powerless", artist:"Linkin Park", album:"Living Things", cover: "Linkin-Park-Living-Things-300x300.jpg"},
+  { trackname:"Main Title", artist:"Ramin Djawadi", album:"Music From The HBO Series", cover: "Game-of-Thrones-Official-Album-Cover-300x300.jpeg"},
+  { trackname:"Go With The Flow", artist:"Queens of the Stone Age", album:"Songs for the Deaf", cover: "Queens_Of_The_Stone_Age-Songs_For_The_Deaf-Frontal-300x300.jpg"},
+  { trackname:"Main Title Theme Song", artist:"Bear McCreary", album:"AMC's Original Soundtrack - Vol. 1", cover: "twd-s3-soundtrack-cover-325-300x300.jpg"},
+  { trackname:"Derezzed", artist:"Daft Punk", album:"TRON: Legacy", cover: "trondp-300x300.gif"},
+  { trackname:"He's a Pirate", artist:"Klaus Badelt", album:"Pirates Of The Caribbean", cover: "Pirates+Of+The+Caribbean+Original+Soundtrack+f168228348a077818cf31110L.jpg"},
+  { trackname:"Opening Suite", artist:"Martin O'Donnell/Michael Salvatori", album:"Halo: Original Soundtrack", cover: "1372289716977s.jpg"}
+];
 
-//CONTROLS
-function play(){
-  player.play();
-}
-function pause(){
-  player.pause();
-}
+var musicPlayer = {
+  player: $('audio')[0],
+  currentTrack: 0,
+  musicName: "",
+  musicInfo: "",
+  currentCover: "",
+  endTime: "",
+  totalTracks: "",
+  playing: false,
+  init: function(){
 
-//MORE FUNCTIONS
-function jumpTo(){
-  player.currentTime = tempo.value;
-}
+    that = this;
 
-function getTime(){
-  if(player.ended){
-    next();
-  }else{
-    var atual = Math.floor(player.currentTime);
-    var total = Math.floor(player.duration);
-    var bar = document.getElementsByTagName('progress')[0];
-    bar.setAttribute("max",total);
-    bar.setAttribute("value",atual);
-    progresso.innerHTML = timer(atual) + ' / ' + timer(total) ;
-  }
-  /*audio[0].addEventListener('ended',function(e){
-      current++;
-      if(current < len){
-        link = playlist.find('a')[current];
-        run($(link),audio[0]);
+    // Read lenght of music
+    $(this.player).bind('timeupdate',function(){
+      if (that.player.ended){
+        that.next();
+      }else{
+        that.updateTime();
       }
-  });*/
-}
-function timer(time){
-  m = parseInt((time / 60) % 60);
-  s = parseInt(time % 60);
-  if(s < 10){
-    s = '0'+s;
-  }
-  return m + ':' + s;
+    })
 
-  /*function updateTrackTime(track){
-      var currTimeDiv = document.getElementById('currentTime');
-      var durationDiv = document.getElementById('duration');
+    // Set playlist size
+    this.totalTracks = playlist.length;
 
-      var currTime = Math.floor(track.currentTime).toString();
-      var duration = Math.floor(track.duration).toString();
+    // Create a list with playlist
+    this.makeList();
 
-      currTimeDiv.innerHTML = formatSecondsAsTime(currTime);
+    // Load music and info
+    this.musicLoad();
+    that.updateTime();
+    this.play();
 
-      if (isNaN(duration)){
-        durationDiv.innerHTML = '00:00';
+    // Player Mapping
+    $('.play').on('click', function() {
+      that.play();
+    });
+    $('.next').on('click', function() {
+      that.next();
+    });
+    $('.prev').on('click', function() {
+      that.prev();
+    });
+    $('#progress').change(function() {
+      that.player.currentTime = this.value;
+    });
+    // List Mapping
+    $('.menu li').on('click', function(event) {
+      that.currentTrack = this.getAttribute('data-track');
+      that.musicLoad();
+    });
+
+
+    //Keyboard Mapping
+    $(document).on('keydown', function(event) {
+
+      var space = 32;
+      var leftArrow = 37;
+      var rightArrow = 39;
+      var menu = 77;
+
+      switch(event.keyCode){
+        case space:
+          that.play();
+          break;
+        case leftArrow:
+          that.prev();
+          break;
+        case rightArrow:
+          that.next();
+          break;
+        case menu:
+          $('body').toggleClass('menu-active');
+          break;
       }
-      else{
-        durationDiv.innerHTML = formatSecondsAsTime(duration);
-      }
+
+    });
+  },
+  play: function(){
+    play = $('.play');
+    if(this.player.paused){
+      play.removeClass('paused');
+      this.playing = true;
+      this.player.play();
+    }else{
+      play.addClass('paused');
+      this.playing = false;
+      this.player.pause();
     }
-    function formatSecondsAsTime(secs, format) {
-      var hr  = Math.floor(secs / 3600);
-      var min = Math.floor((secs - (hr * 3600))/60);
-      var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+  },
+  next: function(){
+    if( (this.currentTrack + 1) === this.totalTracks){
+      this.currentTrack = 0;
+    }else{
+      this.currentTrack++;
+    }
+    this.musicLoad();
+  },
+  prev: function(){
+    if( this.currentTrack == 0){
+      this.currentTrack = this.totalTracks - 1;
+    }else{
+      this.currentTrack--;
+    }
+    this.musicLoad();
+  },
+  musicLoad: function(){
+    var url;
+    var cover;
+    var i = this.currentTrack;
+
+    // Set musicName, musicInfo
+    this.musicName = playlist[i].trackname;
+    this.musicInfo = playlist[i].artist+" - "+playlist[i].album;
+
+    // Convert musicName to lowercase and add '-' into whitespaces and change src on audio player
+    url = playlist[i].trackname.replace(/ /g,"-").replace("'","").toLowerCase();
+    this.player.src = "sounds/"+url+".mp3";
+
+    // Format url from Album covers and set CurrentCover URL
+    cover = "img/covers/"+playlist[i].cover;
+    this.currentCover = cover;
+
+    // Update track info
+    $('.music-name').html(this.musicName); //Music name
+    $('.music-info').html(this.musicInfo); //Artist and album
+    $('.cover img').attr("alt", this.musicName+" - "+playlist[i].artist); // Cover info
+    $(".cover img").attr("src",this.currentCover).hide().fadeIn(1000); // Cover image
+    $(".bgCover").attr("style","background-image: url("+this.currentCover+");").hide().show(); // Background
+
+    this.player.load();
+    this.play();
+    this.updateTime();
+  },
+  updateTime: function(){
+
+    var current = this.player.currentTime;
+    var duration = this.player.duration;
+
+    var c = Math.floor(this.player.currentTime).toString();
+    var e = Math.floor(this.player.duration).toString();
+
+    $('#progress').attr('max', e).attr('value', c);
+
+    c = formatTime(c);
+    e = formatTime(e);
+
+    function formatTime(time) {
+      var hr  = Math.floor(time / 3600);
+      var min = Math.floor((time - (hr * 3600))/60);
+      var sec = Math.floor(time - (hr * 3600) -  (min * 60));
 
       if (min < 10){
         min = "0" + min;
@@ -89,63 +181,41 @@ function timer(time){
       }
 
       return min + ':' + sec;
-    }*/
-}
-//KEY SHORTCUTS
-function capturaTecla(event){
-  if(event.keyCode == 13){
-    jumpTo();
-  }
-}
-window.onkeypress = function(key){
-  key = key.keyCode;
-  switch(key){
-    case 32 : // Space
-      player.paused?play():pause();
-      break;
-    default:
-      console.log(key);
+    }
+
+    $(".time-current").html(c);
+    $(".time-end").html(e);
+
+  },
+  makeList: function(){
+    var list = $('.menu ul');
+    for (var i = 0; i < this.totalTracks; i++) {
+      var item = document.createElement('li');
+      var span = document.createElement('span');
+      var nome = playlist[i].trackname;
+      var artist = playlist[i].artist;
+      item.setAttribute("data-track",i);
+      span.appendChild(document.createTextNode(artist));
+      item.appendChild(document.createTextNode(nome));
+      item.appendChild(span);
+      list.append(item);
+    }
   }
 }
 
-function next(){
-  var current = player.childNodes[1].getAttribute('src');
-  var music = playlist[currentSong];
+musicPlayer.init();
 
-  if(currentSong < playlist.length -1){
-    currentSong++;
-  }else{
-    currentSong = 0;
-  }
-  music = folder + playlist[currentSong];
-  player.src = music;
-  player.load();
-  player.play();
-}
-function prev(){
-  var current = player.childNodes[1].getAttribute('src');
-  var music = playlist[currentSong];
+// MENU SHOW / HIDE
+$('.menu-button.btn-opacity , .close').on('click touchstart', function(e){
+  $('body').toggleClass('menu-active');
+  $('.menu-button').toggleClass('hidden-blur').toggleClass('btn-opacity');
+});
 
-  if(currentSong > 0){
-    currentSong--;
-  }else{
-    currentSong = playlist.length -1;
-  }
-  music = folder + playlist[currentSong];
-  player.src = music;
-  player.load();
-  player.play();
-}
 
-function loadPlaylist(){
-  var list = document.getElementById('playlist');
-  for (var i = 0; i < playlist.length; i++) {
-    var item = document.createElement('li');
-    item.appendChild(document.createTextNode(i+1+" - "+
-      playlist[i].replace('.mp3','')
-      )
-    );
-    list.appendChild(item);
-  }
-}
-window.onload = loadPlaylist();
+// myaudio.play(); // Play the music.
+// myaudio.pause(); // Stop the music.
+// myaudio.duration; // Returns the length of the music track.
+// myaudio.currentTime = 0; // Rewind the audio to the beginning.
+// myaudio.loop = true; // Make the audio track loop.
+// myaudio.muted = true; // Mute the track
+// duration = song.duration;
