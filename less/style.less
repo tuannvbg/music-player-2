@@ -211,7 +211,6 @@ header, .main{
   background-color: #fff;
   color: #555;
   text-align: left;
-  overflow: scroll;
   .transform(translateX(-250px));
   .transition(all 0.3s linear);
 
@@ -273,6 +272,7 @@ header, .main{
 @media(max-width: 600px){
   .player{margin-top: 50px;}
   .cover{width: 160px; height: 160px;}
+  .menu{overflow: scroll;}
 }
 @media(max-height: 500px){
   header{position: absolute; z-index: 99;}
