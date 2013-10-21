@@ -8,8 +8,8 @@
 */
 var playlist = []; // Playlist empty
 
-var musicPlayer = {
-  player: $('audio')[0],
+var player = {
+  audio: document.getElementsByTagName("audio")[0],
   currentTrack: 0,
   musicName: "",
   musicInfo: "",
@@ -23,14 +23,8 @@ var musicPlayer = {
 
     that = this;
 
-    // Check the codec type
-    if (that.player.canPlayType('audio/mpeg;')) {
-      that.codecType["codec"] = 'audio/mpeg';
-      that.codecType["format"] = "mp3";
-    } else {
-      that.codecType["codec"] = 'audio/ogg';
-      that.codecType["format"] = "ogg";
-    }
+    that.audio.addEventListener("loadedmetadata", this.updateTime(), false);
+    that.audio.addEventListener("timeupdate", this.updateTime(), false);
 
     // Set playlist size
     that.totalTracks = playlist.length;
@@ -38,10 +32,19 @@ var musicPlayer = {
     // Create a list with playlist
     that.makeList();
 
+    // Check the codec type
+    if (that.audio.canPlayType('audio/mpeg;')) {
+      that.codecType["codec"] = 'audio/mpeg';
+      that.codecType["format"] = "mp3";
+    } else {
+      that.codecType["codec"] = 'audio/ogg';
+      that.codecType["format"] = "ogg";
+    }
+
     // Load music and info
     that.musicLoad();
-    that.updateTime();
     that.play();
+    that.updateTime();
 
     // Player Mapping
     $('.play').on('click', function() {
@@ -54,7 +57,7 @@ var musicPlayer = {
       that.prev();
     });
     $('#progress').bind("change", function() {
-      that.player.currentTime = this.value;
+      that.audio.currentTime = this.value;
     });
     // List Mapping
     $('.menu li').on('click', function(event) {
@@ -75,6 +78,7 @@ var musicPlayer = {
       var leftArrow = 37;
       var rightArrow = 39;
       var menu = 77;
+      var busca = 66;
 
       switch(event.keyCode){
         case space:
@@ -90,11 +94,14 @@ var musicPlayer = {
           $('body').toggleClass('menu-active');
           $('.menu-button').toggleClass('hidden-blur');
           break;
+        case busca:
+          $('.search-bar').toggle();
+          break;
       }
 
     })
     // Read lenght of music
-    $(that.player).bind('timeupdate',function(){
+    $(that.audio).bind('timeupdate',function(){
       if (this.ended){
         that.next();
       }else{
@@ -109,14 +116,16 @@ var musicPlayer = {
   },
   play: function(){
     play = $('.play');
-    if(this.player.paused){
+    if(this.audio.paused){
       play.removeClass('paused');
+      $('.menu li.active').removeClass('paused');
       this.playing = true;
-      this.player.play();
+      this.audio.play();
     }else{
       play.addClass('paused');
+      $('.menu li.active').addClass('paused');
       this.playing = false;
-      this.player.pause();
+      this.audio.pause();
     }
   },
   next: function(){
@@ -136,8 +145,6 @@ var musicPlayer = {
     this.musicLoad();
   },
   musicLoad: function(){
-    var url;
-    var cover;
     var i = this.currentTrack;
 
     // Set musicName, musicInfo
@@ -145,7 +152,7 @@ var musicPlayer = {
     this.musicInfo = playlist[i].nm_artist+" - "+playlist[i].nm_album;
 
     // Format url from Album covers and set CurrentCover URL
-    cover = "img/covers/"+playlist[i].url_cover;
+    var cover = "img/covers/"+playlist[i].url_cover;
     this.currentCover = cover;
 
     // Update track info
@@ -155,29 +162,20 @@ var musicPlayer = {
     $(".cover img").attr("src",this.currentCover).hide().fadeIn(1000); // Cover image
     $(".bgCover").attr("style","background-image: url("+this.currentCover+");").hide().show(); // Background
 
+    // Active track on menu
+    $('.menu li').removeClass('active');
+    $('.menu li')[i].setAttribute('class','active');
+
     // Convert musicName to lowercase and add '-' into whitespaces and change src on audio player
     url = playlist[i].nm_music.replace(/ /g,"-").replace("'","").toLowerCase();
-    this.player.src = "sounds/"+url+"."+this.codecType['format'];
-    this.player.type = this.codecType['codec'];
+    this.audio.src = "sounds/"+url+"."+this.codecType['format'];
+    this.audio.type = this.codecType['codec'];
 
-    this.player.load();
-    this.play();
+    this.audio.load();
     this.updateTime();
+    this.play();
   },
-  updateTime: function(){
-
-    var current = this.player.currentTime;
-    var duration = this.player.duration;
-
-    var c = Math.floor(this.player.currentTime).toString();
-    var e = Math.floor(this.player.duration).toString();
-
-    $('#progress').attr('max', e).attr('value', c);
-
-    c = formatTime(c);
-    e = formatTime(e);
-
-    function formatTime(time) {
+  formatTime: function(time){
       var hr  = Math.floor(time / 3600);
       var min = Math.floor((time - (hr * 3600))/60);
       var sec = Math.floor(time - (hr * 3600) -  (min * 60));
@@ -189,11 +187,24 @@ var musicPlayer = {
         sec  = "0" + sec;
       }
 
-      return min + ':' + sec;
-    }
+      if (isNaN(min)) {
+        min = "00";
+      }
 
-    $(".time-current").html(c);
-    $(".time-end").html(e);
+      if (isNaN(sec)) {
+        sec = "00";
+      }
+
+      return min + ':' + sec;
+  },
+  updateTime: function(){
+
+    $('#progress')
+    .attr('max', Math.floor(this.audio.duration))
+    .attr('value', Math.floor(this.audio.currentTime));
+
+    $(".time-current").html(this.formatTime(that.audio.currentTime));
+    $(".time-end").html(this.formatTime(that.audio.duration));
 
   },
   makeList: function(){
@@ -218,10 +229,9 @@ $.ajax({
   dataType: 'json',
 
   success : function(data){
-    console.log("Sucesso!");
     playlist = data;
   },
   complete : function(){
-    musicPlayer.init();
+    player.init();
   }
 });
