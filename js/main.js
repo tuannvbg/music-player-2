@@ -23,9 +23,6 @@ var player = {
 
     that = this;
 
-    that.audio.addEventListener("loadedmetadata", this.updateTime(), false);
-    that.audio.addEventListener("timeupdate", this.updateTime(), false);
-
     // Set playlist size
     that.totalTracks = playlist.length;
 
@@ -44,7 +41,7 @@ var player = {
     // Load music and info
     that.musicLoad();
     that.play();
-    that.updateTime();
+    that.setDuration();
 
     // Player Mapping
     $('.play').on('click', function() {
@@ -70,33 +67,40 @@ var player = {
       }
     });
 
-
     //Keyboard Mapping
     $(document).on('keydown', function(event) {
 
-      var space = 32;
-      var leftArrow = 37;
-      var rightArrow = 39;
-      var menu = 77;
-      var busca = 66;
+      var busca = $(".search-bar input");
 
-      switch(event.keyCode){
-        case space:
-          that.play();
-          break;
-        case leftArrow:
-          that.prev();
-          break;
-        case rightArrow:
-          that.next();
-          break;
-        case menu:
-          $('body').toggleClass('menu-active');
-          $('.menu-button').toggleClass('hidden-blur');
-          break;
-        case busca:
-          $('.search-bar').toggle();
-          break;
+      if (!busca.is(":focus")) {
+        var space = 32, leftArrow = 37, rightArrow = 39, menu = 77, busca = 66;
+
+        switch(event.keyCode){
+          case space:
+            that.play();
+            break;
+          case leftArrow:
+            that.prev();
+            break;
+          case rightArrow:
+            that.next();
+            break;
+          case menu:
+            $('body').toggleClass('menu-active');
+            $('.menu-button').toggleClass('hidden-blur');
+            break;
+          case busca:
+            $('body').toggleClass('search-active');
+            $('.search-button').toggleClass('hidden-blur');
+            $(".search-bar input").focus().val(null);
+            break;
+        }
+      }else{
+        if (event.keyCode === 27) {
+          busca.blur().val(null);
+          $('body').removeClass('search-active');
+          $('.search-button').toggleClass('hidden-blur');
+        }
       }
 
     })
@@ -105,13 +109,17 @@ var player = {
       if (this.ended){
         that.next();
       }else{
-        that.updateTime();
+        that.setCurrentTime();
       }
     })
     // MENU & SEARCH: SHOW / HIDE
     $('.menu-button.btn-opacity , .close').on('click touchstart', function(){
       $('body').toggleClass('menu-active');
       $('.menu-button').toggleClass('hidden-blur');
+    });
+    $('.search-button.btn-opacity').on('click touchstart', function(){
+      $('body').toggleClass('search-active');
+      $('.search-button').toggleClass('hidden-blur');
     });
   },
   play: function(){
@@ -172,7 +180,8 @@ var player = {
     this.audio.type = this.codecType['codec'];
 
     this.audio.load();
-    this.updateTime();
+    this.setCurrentTime();
+    this.setDuration();
     this.play();
   },
   formatTime: function(time){
@@ -197,18 +206,28 @@ var player = {
 
       return min + ':' + sec;
   },
-  updateTime: function(){
+  setDuration: function(){
+    var that = this;
+    that.endTime = Math.floor(that.audio.duration);
+    if (isNaN(Math.floor(that.audio.duration))) {
+      setTimeout(function() {
+        that.setDuration();
+      }, 1);
+    }else{
+      var progress = document.getElementById('progress');
+      progress.setAttribute('max', Math.floor(that.audio.duration));
+    }
+    document.getElementById("time-end").innerHTML = this.formatTime(this.endTime);
 
-    $('#progress')
-    .attr('max', Math.floor(this.audio.duration))
-    .attr('value', Math.floor(this.audio.currentTime));
-
-    $(".time-current").html(this.formatTime(that.audio.currentTime));
-    $(".time-end").html(this.formatTime(that.audio.duration));
-
+  },
+  setCurrentTime: function(){
+    var progress = document.getElementById('progress');
+    progress.value = Math.floor(this.audio.currentTime);
+    document.getElementById("time-current").innerHTML = this.formatTime(that.audio.currentTime);
   },
   makeList: function(){
     var list = $('.menu ul');
+
     for (var i = 0; i < this.totalTracks; i++) {
       var item = document.createElement('li');
       var span = document.createElement('span');

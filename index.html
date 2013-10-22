@@ -61,7 +61,7 @@
   <header>
     <div class="search-bar">
       <form action="#">
-        <input type="text" name="music-search" id="music-search" placeholder="Search for songs or artists">
+        <input type="text" name="music-search" id="music-search" placeholder="Search for songs or artists" speech="speech" x-webkit-speech="x-webkit-speech" x-webkit-grammar="builtin:translate" lang="pt-br">
         <button type="submit">Search</button>
       </form>
     </div>
@@ -99,9 +99,9 @@
       </div>
 
       <div class="progress">
-        <div class="time-current"></div>
+        <div class="time-current" id="time-current"></div>
         <input type="range" name="progress" id="progress" value="0" min="0" max="">
-        <div class="time-end"></div>
+        <div class="time-end" id="time-end"></div>
       </div>
 
     </div>

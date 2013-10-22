@@ -53,7 +53,6 @@ Background
   background-repeat: no-repeat;
   background-size: cover;
   width:110%;
-  // min-width: 480px;
   height:110%;
   .filter(blur(20px));
   position:fixed;
@@ -189,11 +188,17 @@ header{
     background-color: white;
     padding: 10px 0;
     text-align: left;
-    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    margin-top: -60px;
+    .transform(translateY(-60px));
+    .transition(all 0.3s linear);
 
     input[type="text"]{
       border: none;
-      width: 90%;
+      width: 95%;
       border-left: 2px solid @azul;
       font-size: 2.4em;
       font-style: italic;
@@ -286,6 +291,13 @@ header{
         color: #555;
       }
     }
+  }
+}
+.search-active{
+  header .search-bar{
+    margin: 0;
+    .transform(translateY(0));
+    .transition(all 0.3s linear);
   }
 }
 .menu-active{
