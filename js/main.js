@@ -73,9 +73,11 @@ var player = {
       var busca = $(".search-bar input");
 
       if (!busca.is(":focus")) {
-        var space = 32, leftArrow = 37, rightArrow = 39, menu = 77, busca = 66;
+        var space = 32, leftArrow = 37, rightArrow = 39, menu = 77, volDown = 40, volUp = 38;
 
-        switch(event.keyCode){
+        var key = event.keyCode
+
+        switch(key){
           case space:
             that.play();
             break;
@@ -85,21 +87,27 @@ var player = {
           case rightArrow:
             that.next();
             break;
+          case volUp:
+            that.vol("up");
+            break;
+          case volDown:
+            that.vol("down");
+            break;
           case menu:
             $('body').toggleClass('menu-active');
             $('.menu-button').toggleClass('hidden-blur');
             break;
-          case busca:
-            $('body').toggleClass('search-active');
-            $('.search-button').toggleClass('hidden-blur');
-            $(".search-bar input").focus().val(null);
+          default:
+            if (key > 47 && key < 91) {
+              $('body').addClass('search-active');
+              busca.focus().val("");
+            };
             break;
         }
       }else{
         if (event.keyCode === 27) {
-          busca.blur().val(null);
+          busca.blur();
           $('body').removeClass('search-active');
-          $('.search-button').toggleClass('hidden-blur');
         }
       }
 
@@ -113,11 +121,11 @@ var player = {
       }
     })
     // MENU & SEARCH: SHOW / HIDE
-    $('.menu-button.btn-opacity , .close').on('click touchstart', function(){
+    $('.menu-button.btn-opacity , .menu > .close').on('click', function(){
       $('body').toggleClass('menu-active');
       $('.menu-button').toggleClass('hidden-blur');
     });
-    $('.search-button.btn-opacity').on('click touchstart', function(){
+    $('.search-button.btn-opacity, .search-bar .close').on('click', function(){
       $('body').toggleClass('search-active');
       $('.search-button').toggleClass('hidden-blur');
     });
@@ -151,6 +159,14 @@ var player = {
       this.currentTrack--;
     }
     this.musicLoad();
+  },
+  vol: function(action){
+    var volume = this.audio.volume;
+    if (volume >= 0.10000000000000014 && action == "down"){
+      this.audio.volume -= 0.1;
+    }else if(volume < 1 && action == "up"){
+      this.audio.volume += 0.1;
+    }
   },
   musicLoad: function(){
     var i = this.currentTrack;

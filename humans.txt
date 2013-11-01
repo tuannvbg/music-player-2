@@ -1,7 +1,7 @@
 /* TEAM */
 
 Developer & Designer: Rafaell Lycan
-Site: https://www.rafaell.cc, https://github.com/rafaell-lycan
+Site: http://www.rafaell.cc, https://github.com/rafaell-lycan
 Twitter: @RafaellLycan
 Location: Brazil
 

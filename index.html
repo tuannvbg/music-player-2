@@ -13,7 +13,7 @@
 
   <!-- Behavioral Meta Data -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <!-- Core Meta Data -->
   <meta name="author" content="Rafaell Lycan">
@@ -41,7 +41,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/normalizer.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700">
   <link rel="stylesheet" href="css/style.css"/>
 
   <!-- Favicon -->
@@ -61,7 +61,8 @@
   <header>
     <div class="search-bar">
       <form action="#">
-        <input type="text" name="music-search" id="music-search" placeholder="Search for songs or artists" speech="speech" x-webkit-speech="x-webkit-speech" x-webkit-grammar="builtin:translate" lang="pt-br">
+        <input type="text" name="music-search" id="music-search" placeholder="Search for songs or artists" autocomplete="off">
+        <span class="close btn-opacity"><img src="img/menu-close-icon.png" height="36" width="36" alt=""></span>
         <button type="submit">Search</button>
       </form>
     </div>
