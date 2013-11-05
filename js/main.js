@@ -7,6 +7,7 @@
       | Player
 */
 var playlist = []; // Playlist empty
+var searchlist = []; // searchlist empty
 
 var player = {
   audio: document.getElementsByTagName("audio")[0],
@@ -41,7 +42,6 @@ var player = {
     // Load music and info
     that.musicLoad();
     that.play();
-    that.setDuration();
 
     // Player Mapping
     $('.play').on('click', function() {
@@ -240,11 +240,16 @@ var player = {
     var progress = document.getElementById('progress');
     progress.value = Math.floor(this.audio.currentTime);
     document.getElementById("time-current").innerHTML = this.formatTime(that.audio.currentTime);
+
+    this.audio.duration != this.endTime? this.setDuration() : null ;
+
   },
   makeList: function(){
     var list = $('.menu ul');
 
     for (var i = 0; i < this.totalTracks; i++) {
+      searchlist.push(playlist[i].nm_music);
+      searchlist.push(playlist[i].nm_artist);
       var item = document.createElement('li');
       var span = document.createElement('span');
       var nome = playlist[i].nm_music;
@@ -257,6 +262,13 @@ var player = {
     }
   }
 }
+
+$('#music-search').typeahead({
+  name: 'music',
+  local: [ "Linkin Park", "Queens of the stone age", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune" ],
+  // prefetch: 'playlist.json',
+  limit: 10
+});
 
 // Add tracks on playlist
 $.ajax({
