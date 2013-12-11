@@ -22,7 +22,7 @@ var player = {
   playing: false,
   init: function(){
 
-    that = this;
+    var that = this;
 
     // Set playlist size
     that.totalTracks = playlist.length;
@@ -57,7 +57,7 @@ var player = {
       that.audio.currentTime = this.value;
     });
     // List Mapping
-    $('.menu li').on('click', function(event) {
+    $('.menu li').on('click', function() {
       var track = this.getAttribute('data-track');
       if(track === that.currentTrack){
         that.play();
@@ -67,41 +67,77 @@ var player = {
       }
     });
 
+    var ctrlDown = false;
+
     //Keyboard Mapping
     $(document).on('keydown', function(event) {
 
+      //Input search
       var busca = $(".search-bar input");
 
+      //Search input in focus?
       if (!busca.is(":focus")) {
-        var space = 32, leftArrow = 37, rightArrow = 39, menu = 77, volDown = 40, volUp = 38;
+        var space = 32, menu = 77, help = 72, search = 83, ctrl = 16, leftArrow = 37, rightArrow = 39, volDown = 40, volUp = 38;
 
-        var key = event.keyCode
+        var key = event.keyCode;
+
+        // console.log(key);
+
+        if(key == ctrl){
+          ctrlDown = true;
+        }
 
         switch(key){
+          //Play & Pause
           case space:
             that.play();
             break;
           case leftArrow:
-            that.prev();
+            //Seek backward 5sec
+            if (ctrlDown == false) {
+              that.audio.currentTime -= 5;
+              that.audio.play();
+            }else{
+              //Previous track
+              that.prev();
+            }
             break;
           case rightArrow:
-            that.next();
+            //Seek forward 5sec
+            if (ctrlDown == false && (that.audio.currentTime + 5) < that.audio.duration) {
+              that.audio.currentTime += 5;
+              that.audio.play();
+            }else{
+              //Next track
+              that.next();
+            }
             break;
+          //Volume Control
           case volUp:
-            that.vol("up");
+            //Increase volume
+            if (ctrlDown == true){
+              that.vol("up");
+            }
             break;
           case volDown:
-            that.vol("down");
+            //Decrease volume
+            if (ctrlDown == true){
+              that.vol("down");
+            }
             break;
+          //Open & Close Menu
           case menu:
-            $('body').toggleClass('menu-active');
+            $('body').toggleClass('menu-active').removeClass('search-active');
             $('.menu-button').toggleClass('hidden-blur');
             break;
-          default:
-            if (key > 47 && key < 91) {
-              $('body').addClass('search-active');
-              busca.focus().val("");
-            };
+          //Open & Close Search
+          case search:
+            $('body').addClass('search-active').removeClass('menu-active');
+            $('.menu-button').removeClass('hidden-blur');
+            busca.focus().val();
+            break;
+          case help:
+            console.log("Help: in the next version! =)");
             break;
         }
       }else{
@@ -111,7 +147,12 @@ var player = {
         }
       }
 
-    })
+    }).on('keyup', function(event) {
+      if(event.keyCode == 16){
+        ctrlDown = false;
+        // console.log(ctrlDown);
+      }
+    });
     // Read lenght of music
     $(that.audio).bind('timeupdate',function(){
       if (this.ended){
@@ -119,7 +160,7 @@ var player = {
       }else{
         that.setCurrentTime();
       }
-    })
+    });
     // MENU & SEARCH: SHOW / HIDE
     $('.menu-button.btn-opacity , .menu > .close').on('click', function(){
       $('body').toggleClass('menu-active');
@@ -127,11 +168,11 @@ var player = {
     });
     $('.search-button.btn-opacity, .search-bar .close').on('click', function(){
       $('body').toggleClass('search-active');
-      $('.search-button').toggleClass('hidden-blur');
+      // $('.search-button').toggleClass('hidden-blur');
     });
   },
   play: function(){
-    play = $('.play');
+    var play = $('.play');
     if(this.audio.paused){
       play.removeClass('paused');
       $('.menu li.active').removeClass('paused');
@@ -153,12 +194,16 @@ var player = {
     this.musicLoad();
   },
   prev: function(){
-    if( this.currentTrack == 0){
-      this.currentTrack = this.totalTracks - 1;
+    if (player.audio.currentTime <= 3) {
+      if( this.currentTrack === 0){
+        this.currentTrack = this.totalTracks - 1;
+      }else{
+        this.currentTrack--;
+      }
+      this.musicLoad();
     }else{
-      this.currentTrack--;
+      player.audio.currentTime = 0;
     }
-    this.musicLoad();
   },
   vol: function(action){
     var volume = this.audio.volume;
@@ -169,35 +214,45 @@ var player = {
     }
   },
   musicLoad: function(){
+    //Get possition in array
     var i = this.currentTrack;
 
+    //Music Data
+    var track = playlist[i];
+    var music = track.nm_music;
+    var artist = track.nm_artist;
+    var album = track.nm_album;
+    var cover = track.url_cover;
+
     // Set musicName, musicInfo
-    this.musicName = playlist[i].nm_music;
-    this.musicInfo = playlist[i].nm_artist+" - "+playlist[i].nm_album;
+    this.musicName = music;
+    this.musicInfo = artist+" - "+album;
 
     // Format url from Album covers and set CurrentCover URL
-    var cover = "img/covers/"+playlist[i].url_cover;
-    this.currentCover = cover;
+    var coverImage = "img/covers/"+cover;
+    this.currentCover = coverImage;
 
     // Update track info
     $('.music-name').html(this.musicName); //Music name
-    $('.music-info').html(this.musicInfo); //Artist and album
-    $('.cover img').attr("alt", this.musicName+" - "+this.musicInfo); // Cover info
-    $(".cover img").attr("src",this.currentCover).hide().fadeIn(1000); // Cover image
-    $(".bgCover").attr("style","background-image: url("+this.currentCover+");").hide().show(); // Background
+    $('.music-info').html(artist+" - "+album); //Artist and album
+    $('.cover img').attr("alt", music+" - "+artist+" - "+album); // Cover info
+    $(".cover img").attr("src",coverImage).hide().fadeIn(1000); // Cover image
+    $(".bgCover").attr("style","background-image: url("+coverImage+");").hide().show(); // Background
 
     // Active track on menu
     $('.menu li').removeClass('active');
     $('.menu li')[i].setAttribute('class','active');
 
     // Convert musicName to lowercase and add '-' into whitespaces and change src on audio player
-    url = playlist[i].nm_music.replace(/ /g,"-").replace("'","").toLowerCase();
+    var url = music.replace(/ /g,"-").replace("'","").replace("(","").replace(")","").toLowerCase();
+    console.log("Playing now: "+music+" by "+artist);
     this.audio.src = "sounds/"+url+"."+this.codecType['format'];
     this.audio.type = this.codecType['codec'];
 
     this.audio.load();
     this.setCurrentTime();
     this.setDuration();
+    this.saveState();
     this.play();
   },
   formatTime: function(time){
@@ -233,16 +288,31 @@ var player = {
       var progress = document.getElementById('progress');
       progress.setAttribute('max', Math.floor(that.audio.duration));
     }
-    document.getElementById("time-end").innerHTML = this.formatTime(this.endTime);
+    document.getElementById("duration").innerHTML = this.formatTime(this.endTime);
 
   },
   setCurrentTime: function(){
     var progress = document.getElementById('progress');
-    progress.value = Math.floor(this.audio.currentTime);
-    document.getElementById("time-current").innerHTML = this.formatTime(that.audio.currentTime);
+    var trackBar = progress.parentNode.children[0];
 
-    this.audio.duration != this.endTime? this.setDuration() : null ;
+    var current = Math.floor(this.audio.currentTime);
+    var percent = ( current * 100 ) / player.endTime;
 
+    progress.value = current;
+    trackBar.style.width = percent+'%';
+    document.getElementById("time").innerHTML = this.formatTime(this.audio.currentTime);
+
+
+
+    this.audio.duration != this.endTime ? this.setDuration() : null ;
+
+  },
+  saveState: function(music){
+    localStorage.setItem('music', this.currentTrack);
+    if(music != null){
+      player.currentTrack = music;
+      player.musicLoad();
+    }
   },
   makeList: function(){
     var list = $('.menu ul');
@@ -261,14 +331,7 @@ var player = {
       list.append(item);
     }
   }
-}
-
-$('#music-search').typeahead({
-  name: 'music',
-  local: [ "Linkin Park", "Queens of the stone age", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune" ],
-  // prefetch: 'playlist.json',
-  limit: 10
-});
+};
 
 // Add tracks on playlist
 $.ajax({
@@ -282,3 +345,7 @@ $.ajax({
     player.init();
   }
 });
+
+if (localStorage.getItem('music') > 0) {
+  player.saveState(localStorage.getItem('music'));
+}

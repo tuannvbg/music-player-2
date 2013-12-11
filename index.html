@@ -42,6 +42,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/normalizer.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+  <link rel="stylesheet" href="css/jscrollpane.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <!-- <link rel="stylesheet" href="http://twitter.github.io/typeahead.js/css/examples.css"/> -->
 
@@ -101,9 +102,12 @@
       </div>
 
       <div class="progress">
-        <div class="time-current" id="time-current"></div>
-        <input type="range" name="progress" id="progress" value="0" min="0" max="">
-        <div class="time-end" id="time-end"></div>
+        <div class="time" id="time"></div>
+        <div class="track">
+          <span></span>
+          <input type="range" name="progress" id="progress" value="0" min="0" max="">
+        </div>
+        <div class="duration" id="duration"></div>
       </div>
 
     </div>
@@ -111,7 +115,7 @@
 
     <script src="js/jquery.js"></script>
     <script src="js/plugins.js"></script>
-    <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
+    <!--<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>-->
     <script src="js/main.js"></script>
 </body>
 </html>
