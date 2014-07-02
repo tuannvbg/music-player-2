@@ -58,8 +58,37 @@
 
 </head>
 <body>
-  <div class="bgCover"></div>
+  <!-- Full Background Cover -->
+  <section class="bgCover"></section>
 
+  <!-- <section class="search"></section> -->
+
+  <!-- Help and Information -->
+  <section class="help">
+    <div class="content">
+      <h1>Information:</h1>
+      <p>This is a simple player made ​​with HTML5, CSS3 and JavaScript that started with a simple study of the audio API. The biggest difficulty is to always have a version of the song for each browser type, for it was the idea of ​​integrating everything with Deezer and Youtube.</p>
+      <p>New features like lyrics and buy music on iTunes soon.</p>
+      <h1>Keyboard Shortcuts:</h1>
+      <div class="keys">
+        <div class="column left">
+          <p class="item"><span class="key big">Space</span>Toggle play &amp; pause</p>
+          <p class="item"><span class="key">⇧</span><span class="key">←</span>Previous track</p>
+          <p class="item"><span class="key">⇧</span><span class="key">→</span>Next track</p>
+          <p class="item"><span class="key">⇧</span><span class="key">↓</span>Decrease volume</p>
+          <p class="item"><span class="key">⇧</span><span class="key">↑</span>Increase volume</p>
+        </div>
+        <div class="column right">
+          <p class="item"><span class="key pull-left">→</span>Seek forward</p>
+          <p class="item"><span class="key pull-left">←</span>Seek backward</p>
+          <p class="item"><span class="key pull-left">S</span>Search</p>
+          <p class="item"><span class="key pull-left">M</span>Open Playlist Menu</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Header -->
   <header>
     <div class="search-bar">
       <form action="#">
@@ -68,27 +97,34 @@
         <button type="submit">Search</button>
       </form>
     </div>
-    <div class="menu-button btn-opacity">
-    </div>
-    <div class="search-button btn-opacity">
-    </div>
+    <nav>
+      <a href="#playlist" class="menu-button btn-opacity" title="Playlist"></a>
+      <a href="#search" class="search-button btn-opacity" title="Search"></a>
+      <a href="#info" class="info-button btn-opacity" title="Help and Information"></a>
+    </nav>
   </header>
-  <nav class="menu">
+
+  <!-- Menu -->
+  <aside class="menu">
     <h2>Playlist</h2>
     <span class="close btn-opacity"><img src="img/menu-close-icon.png" height="36" width="36" alt=""></span>
-    <ul>
-    </ul>
-  </nav>
-  <div class="main">
+    <div class="scroll">
+      <ul>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Player body -->
+  <main class="main">
     <div class="player">
 
       <figure class="cover">
         <img src="" alt="">
       </figure>
-      <audio src="../sounds/derezzed.mp3">
+<!--       <audio src="../sounds/derezzed.mp3">
 
         Your browser does not support HTML5 audio, <a href="www.google.com/chrome/‎" target="_blank">Download Google Chrome!</a>
-      </audio>
+      </audio> -->
 
       <div class="info">
         <h2 class="music-name"></h2>
@@ -111,11 +147,10 @@
       </div>
 
     </div>
-  </div>
+  </main>
 
     <script src="js/jquery.js"></script>
     <script src="js/plugins.js"></script>
-    <!--<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>-->
     <script src="js/main.js"></script>
 </body>
 </html>

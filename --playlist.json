@@ -1,0 +1,170 @@
+[
+    {
+        "id_music": "8",
+        "nm_music": "Derezzed",
+        "nm_artist": "Daft Punk",
+        "nm_album": "TRON: Legacy",
+        "url_cover": "trondp-300x300.gif",
+        "url_music": "derezzed-daft_punk"
+    },
+    {
+        "id_music": "6",
+        "nm_music": "Go With The Flow",
+        "nm_artist": "Queens of the Stone Age",
+        "nm_album": "Songs for the Deaf",
+        "url_cover": "Queens_Of_The_Stone_Age-Songs_For_The_Deaf-Frontal-300x300.jpg",
+        "url_music": "go_with_the_flow-queens_of_the_stone_age"
+    },
+    {
+        "id_music": "9",
+        "nm_music": "He's a Pirate",
+        "nm_artist": "Klaus Badelt",
+        "nm_album": "Pirates Of The Caribbean",
+        "url_cover": "Pirates+Of+The+Caribbean+Original+Soundtrack+f168228348a077818cf31110L.jpg",
+        "url_music": "hes_a_pirate-klaus_badelt"
+    },
+    {
+        "id_music": "5",
+        "nm_music": "Main Title",
+        "nm_artist": "Ramin Djawadi",
+        "nm_album": "Music From The HBO Series",
+        "url_cover": "Game-of-Thrones-Official-Album-Cover-300x300.jpeg",
+        "url_music": "main_title-ramin_djawadi"
+    },
+    {
+        "id_music": "7",
+        "nm_music": "Main Title Theme Song",
+        "nm_artist": "Bear McCreary",
+        "nm_album": "AMC's Original Soundtrack - Vol. 1",
+        "url_cover": "twd-s3-soundtrack-cover-325-300x300.jpg",
+        "url_music": "main_title_theme_song-bear_mccreary"
+    },
+    {
+        "id_music": "10",
+        "nm_music": "Opening Suite",
+        "nm_artist": "Martin O'Donnell/Michael Salvatori",
+        "nm_album": "Halo: Original Soundtrack",
+        "url_cover": "1372289716977s.jpg",
+        "url_music": "opening_suite-martin_odonnell-michael_salvatori"
+    },
+    {
+        "id_music": "4",
+        "nm_music": "Powerless",
+        "nm_artist": "Linkin Park",
+        "nm_album": "Living Things",
+        "url_cover": "Linkin-Park-Living-Things-300x300.jpg",
+        "url_music": "powerless-linkin_park"
+    },
+    {
+        "id_music": "1",
+        "nm_music": "Radioactive",
+        "nm_artist": "Imagine Dragons",
+        "nm_album": "Continued Silence EP",
+        "url_cover": "imagine-dragons-ep-cover-300x300.jpg",
+        "url_music": "radioactive-imagine_dragons"
+    },
+    {
+        "id_music": "3",
+        "nm_music": "Shoot to thrill",
+        "nm_artist": "AC/DC",
+        "nm_album": "Back in Black",
+        "url_cover": "backinblack_300.jpg",
+        "url_music": "shoot_to_thrill-ac-dc"
+    },
+    {
+        "id_music": "2",
+        "nm_music": "Too Close",
+        "nm_artist": "Alex Clare",
+        "nm_album": "The Lateness of the Hour",
+        "url_cover": "alex-clare-too-close.jpg",
+        "url_music": "too_close-alex_clare"
+    },
+    {
+        "id_music": "11",
+        "nm_music": "Viva La Vida",
+        "nm_artist": "Coldplay",
+        "nm_album": "Viva la Vida",
+        "url_cover": "coldplay-viva_la_vida-cover1-300x300.jpg",
+        "url_music": "viva_la_vida-coldplay"
+    },
+    {
+        "id_music": "12",
+        "nm_music": "Vodka",
+        "nm_artist": "Korpiklaani",
+        "nm_album": "Karkelo",
+        "url_cover": "Karkelo-300x300.jpg",
+        "url_music": "vodka-korpiklaani"
+    },
+    {
+        "id_music": "13",
+        "nm_music": "Tequila",
+        "nm_artist": "Korpiklaani",
+        "nm_album": "Ukon Wacka",
+        "url_cover": "Korpiklaani_-_Ukon_Wacka_artwork-300x300.jpg",
+        "url_music": "tequila-korpiklaani"
+    },
+    {
+        "id_music": "14",
+        "nm_music": "Stairway to Heaven",
+        "nm_artist": "Led Zeppelin",
+        "nm_album": "Led Zeppelin IV",
+        "url_cover": "Led+Zeppelin+IV+LedZeppelinIVledzepiv-1-300x300.png",
+        "url_music": "stairway_to_heaven-led_zeppelin"
+    },
+    {
+        "id_music": "15",
+        "nm_music": "Money For Nothing",
+        "nm_artist": "Dire Straits",
+        "nm_album": "Sultans of Swing",
+        "url_cover": "88134239.png",
+        "url_music": "money_for_nothing-dire_straits"
+    },
+    {
+        "id_music": "16",
+        "nm_music": "Point of Know Return",
+        "nm_artist": "Kansas",
+        "nm_album": "The Best of Kansas",
+        "url_cover": "best-of-300x300.jpg",
+        "url_music": "point_of_know_return-Kansas"
+    },
+    {
+        "id_music": "17",
+        "nm_music": "Free Bird",
+        "nm_artist": "Lynyrd Skynyrd",
+        "nm_album": "A Retrospective",
+        "url_cover": "8762987.jpg",
+        "url_music": "free_bird-lynyrd_skynyrd"
+    },
+    {
+        "id_music": "18",
+        "nm_music": "Separate Ways (Worlds Apart)",
+        "nm_artist": "Journey",
+        "nm_album": "Frontiers",
+        "url_cover": "journey-frontiers.jpg",
+        "url_music": "separate_ways_worlds_apart-journey"
+    },
+    {
+        "id_music": "19",
+        "nm_music": "Get Lucky",
+        "nm_artist": "Daft Punk (feat. Pharrell Williams)",
+        "nm_album": "Random Access Memories",
+        "url_cover": "daft-punk-random-access-memories-300x300.jpg",
+        "url_music": "separate_ways_worlds_apart-journey"
+    },
+    {
+        "id_music": "20",
+        "nm_music": "Supermassive Black Hole",
+        "nm_artist": "Muse",
+        "nm_album": "Black Holes & Revelations",
+        "url_cover": "muse.300x300.jpg",
+        "url_music": "separate_ways_worlds_apart-journey"
+    },
+    {
+        "id_music": "20",
+        "nm_music": "Feeling Good",
+        "nm_artist": "Muse",
+        "nm_album": "Origin of Symmetry",
+        "url_cover": "muse-origin-of-symmetry-300x300.jpg",
+        "url_music": "separate_ways_worlds_apart-journey"
+    }
+]

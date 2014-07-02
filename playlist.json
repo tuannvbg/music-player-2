@@ -14,5 +14,9 @@
     {"id_music": "13","nm_music": "Tequila","nm_artist": "Korpiklaani","nm_album": "Ukon Wacka","url_cover": "Korpiklaani_-_Ukon_Wacka_artwork-300x300.jpg","url_music": "tequila-korpiklaani"},
     {"id_music": "14","nm_music": "Point of Know Return","nm_artist": "Kansas","nm_album": "The Best of Kansas","url_cover": "best-of-300x300.jpg","url_music": "point_of_know_return-Kansas"},
     {"id_music": "15","nm_music": "Separate Ways (Worlds Apart)","nm_artist": "Journey","nm_album": "Frontiers","url_cover": "journey-frontiers.jpg","url_music": "separate_ways_worlds_apart-journey"},
-    {"id_music": "16","nm_music": "Free Bird","nm_artist": "Lynyrd Skynyrd","nm_album": "A Retrospective","url_cover": "8762987.jpg","url_music": "free_bird-lynyrd_skynyrd"}
+    {"id_music": "16","nm_music": "Free Bird","nm_artist": "Lynyrd Skynyrd","nm_album": "A Retrospective","url_cover": "8762987.jpg","url_music": "free_bird-lynyrd_skynyrd"},
+    {"id_music": "17","nm_music": "Get Lucky","nm_artist": "Daft Punk (feat. Pharrell Williams)","nm_album": "Random Access Memories","url_cover": "daft-punk-random-access-memories-300x300.jpg","url_music": "separate_ways_worlds_apart-journey"},
+    {"id_music": "18","nm_music": "Get Lucky","nm_artist": "Daft Punk (feat. Pharrell Williams)","nm_album": "Random Access Memories","url_cover": "daft-punk-get-lucky-cover-300x300.jpg","url_music": "separate_ways_worlds_apart-journey"},
+    {"id_music": "19","nm_music": "Supermassive Black Hole","nm_artist": "Muse","nm_album": "Black Holes & Revelations","url_cover": "muse.300x300.jpg","url_music": "separate_ways_worlds_apart-journey"},
+    {"id_music": "20","nm_music": "Feeling Good","nm_artist": "Muse","nm_album": "Origin of Symmetry","url_cover": "muse-origin-of-symmetry-300x300.jpg","url_music": "separate_ways_worlds_apart-journey"}
 ]

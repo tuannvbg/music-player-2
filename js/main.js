@@ -10,7 +10,8 @@ var playlist = []; // Playlist empty
 var searchlist = []; // searchlist empty
 
 var player = {
-  audio: document.getElementsByTagName("audio")[0],
+  // audio: document.getElementsByTagName("audio")[0],
+  audio: new Audio(),
   currentTrack: 0,
   musicName: "",
   musicInfo: "",
@@ -41,7 +42,7 @@ var player = {
 
     // Load music and info
     that.musicLoad();
-    that.play();
+    // that.play();
 
     // Player Mapping
     $('.play').on('click', function() {
@@ -77,11 +78,11 @@ var player = {
 
       //Search input in focus?
       if (!busca.is(":focus")) {
-        var space = 32, menu = 77, help = 72, search = 83, ctrl = 16, leftArrow = 37, rightArrow = 39, volDown = 40, volUp = 38;
+        var esc = 27, space = 32, menu = 77, help = 72, search = 83, ctrl = 16, leftArrow = 37, rightArrow = 39, volDown = 40, volUp = 38;
 
         var key = event.keyCode;
 
-        // console.log(key);
+        //console.log(key);
 
         if(key == ctrl){
           ctrlDown = true;
@@ -127,17 +128,20 @@ var player = {
             break;
           //Open & Close Menu
           case menu:
-            $('body').toggleClass('menu-active').removeClass('search-active');
-            $('.menu-button').toggleClass('hidden-blur');
+            $('body').toggleClass('menu-active').removeClass('search-active').removeClass('help-active');
             break;
           //Open & Close Search
           case search:
-            $('body').addClass('search-active').removeClass('menu-active');
-            $('.menu-button').removeClass('hidden-blur');
+            $('body').toggleClass('search-active').removeClass('help-active').removeClass('menu-active');
             busca.focus().val();
             break;
           case help:
+            $('body').toggleClass('help-active').removeClass('menu-active').removeClass('search-active');
             console.log("Help: in the next version! =)");
+            break;
+          case esc:
+            $('body').removeClass();
+            console.log("Escape");
             break;
         }
       }else{
@@ -161,14 +165,51 @@ var player = {
         that.setCurrentTime();
       }
     });
-    // MENU & SEARCH: SHOW / HIDE
-    $('.menu-button.btn-opacity , .menu > .close').on('click', function(){
-      $('body').toggleClass('menu-active');
-      $('.menu-button').toggleClass('hidden-blur');
+    // SHOW / HIDE - MENU, SEARCH, HELP
+    $('header a').on('click', function() {
+      var element = this.hash;
+      element = element.replace('#','');
+
+      switch(element){
+        case 'playlist':
+          $('body').toggleClass('menu-active');
+          $('.menu-button').toggleClass('hidden-blur');
+          break;
+        case 'search':
+          $('body').toggleClass('search-active');
+          break;
+        case 'info':
+          $('body').toggleClass('help-active');
+          break;
+      }
+      return false;
     });
-    $('.search-button.btn-opacity, .search-bar .close').on('click', function(){
-      $('body').toggleClass('search-active');
-      // $('.search-button').toggleClass('hidden-blur');
+    $('.help').on('click', function() {
+      $('body').toggleClass('help-active');
+    });
+    $('.menu .close, .search-bar .close').on('click', function() {
+      $('body').removeClass();
+    });
+
+    //Submit form
+    $('.search-bar form').on('submit', function() {
+
+      var valor = this.children[0].value;
+      $.ajax({
+        url: 'playlist.json',
+        dataType: 'json',
+
+        success : function(data){
+          for (var i = 0, tamanho = data.length; i < tamanho; i++) {
+            if(data[i].nm_music.toLowerCase().indexOf(valor) >= 0 || data[i].nm_artist.toLowerCase().indexOf(valor) >= 0){
+              player.currentTrack = i;
+              player.musicLoad();
+              break;
+            }
+          };
+        }
+      });
+      return false;
     });
   },
   play: function(){
@@ -192,6 +233,7 @@ var player = {
       this.currentTrack++;
     }
     this.musicLoad();
+    this.play();
   },
   prev: function(){
     if (player.audio.currentTime <= 3) {
@@ -201,6 +243,7 @@ var player = {
         this.currentTrack--;
       }
       this.musicLoad();
+      this.play();
     }else{
       player.audio.currentTime = 0;
     }
@@ -253,7 +296,7 @@ var player = {
     this.setCurrentTime();
     this.setDuration();
     this.saveState();
-    this.play();
+    // this.play();
   },
   formatTime: function(time){
       var hr  = Math.floor(time / 3600);
@@ -330,6 +373,7 @@ var player = {
       item.appendChild(span);
       list.append(item);
     }
+    $('.scroll').jScrollPane();
   }
 };
 

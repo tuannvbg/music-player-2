@@ -21,29 +21,34 @@ body{
   font: normal 10px/1.4em 'Lato', sans-serif;
 }
 .btn-opacity{
-  opacity: 0.6;
+  .opacity(0.6);
   cursor: pointer;
 }
 .btn-opacity:hover{
-  opacity: 0.9;
+  .opacity(1);
 }
 .hidden{
-  opacity: 0;
+  .opacity(0);
   display: none;
 }
 .hidden-blur{
-  opacity: 0;
+  .opacity(0);
   .transition(all 0.1s linear);
 
   &.btn-opacity:hover{
     cursor: auto;
-    opacity: 0;
+    .opacity(0);
   }
 }
 
 .animate{
   .transition(all 200ms linear);
 }
+
+.right{float: right;}
+.left{float: left;}
+.clear{clear: both;}
+.column{width: 50%;}
 
 .placeholder(#ccc);
 
@@ -196,6 +201,62 @@ Player
 /*####################
 UI Elements
 ####################*/
+.search{
+  display: none;
+}
+.help{
+  background: rgba(255,255,255,0.8);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 99;
+  display: none;
+  .opacity(0);
+  .transition(all 300ms linear);
+
+  .content{
+    width: 100%;
+    max-width: 460px;
+    height: 310px;
+    padding: 20px;
+    background: #fff;
+    margin: 5% auto 0;
+    text-align: left;
+    color: #555;
+    .border-radius(3px);
+    .box-shadow(0 5px 10px 0 rgba(0,0,0,.12));
+
+    h1{
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    .key{
+      background: #eee;
+      width: 14px;
+      margin-right: 5px;
+      padding: 3px 5px;
+      text-align: center;
+      display: inline-block;
+      .border-radius(3px);
+
+      &.big{
+        width: 43px;
+      }
+      &.pull-left{
+        margin-left: 30px;
+      }
+    }
+    .keys{
+      text-transform: uppercase;
+      margin-top: 20px;
+
+      .item{
+        margin-top: 0;
+        display: block;
+      }
+    }
+  }
+}
 header, .main{
   width: 100%;
   display: block;
@@ -253,10 +314,10 @@ header{
     button{ display: none;}
   }
 }
-.menu-button, .search-button{
+.menu-button, .search-button, .info-button{
   margin: 20px;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   background-repeat: no-repeat;
 }
 .menu-button{
@@ -267,6 +328,10 @@ header{
 .search-button{
   float: right;
   background-image: url(../img/busca-icon.png);
+}
+.info-button{
+  float: right;
+  background-image: url(../img/info-icon.png);
 }
 .menu{
   position: fixed;
@@ -310,7 +375,7 @@ header{
     font-size: 1.4em;
     cursor: pointer;
     background-repeat: no-repeat;
-    background-position: 250px center;
+    background-position: 240px center;
 
     span{
       display: block;
@@ -349,7 +414,17 @@ header{
     .transition(all 0.3s linear);
   }
 }
+.help-active{
+  .help{
+    display: block;
+    .opacity(1);
+    .transition(all 300ms linear);
+  }
+}
 .menu-active{
+  .menu-button{
+    display: none;
+  }
   .menu{
     left: 0;
     .transform(translateX(0));
@@ -359,6 +434,12 @@ header{
     .transform(translateX(@widthMenu));
     .transition(all 0.3s linear);
   }
+}
+.scroll{
+  width: 100%;
+  display: block;
+  height: 90%;
+  overflow: auto;
 }
 @media(max-width: 600px){
   .player{margin-top: 50px;}
