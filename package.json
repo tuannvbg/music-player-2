@@ -1,0 +1,20 @@
+{
+  "name": "music-player",
+  "version": "0.1.2",
+  "description": "A simple player with HTML/CSS/JS",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaell-lycan/music-player.git"
+  },
+  "author": "Rafaell Lycan <hi@rafaell.cc>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rafaell-lycan/music-player/issues"
+  },
+  "homepage": "https://github.com/rafaell-lycan/music-player",
+  "devDependencies": {
+    "css-sprite": "^0.9.0",
+    "gulp": "^3.8.10"
+  }
+}
