@@ -7,11 +7,11 @@
     jshint = require('gulp-jshint');
 
     // JSHint
-    /*gulp.task('lint', function() {
+    gulp.task('lint', function() {
         return gulp.src()
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
-    });*/
+    });
 
     // Uglify
     gulp.task('compress', function() {
