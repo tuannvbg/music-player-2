@@ -12,6 +12,7 @@
     var jsFiles = [
         'assets/components/angular/angular.js',
         'assets/components/angular-route/angular-route.js',
+        'assets/components/ng-deezer-sdk/deezer.js',
         'app/app.js',
         'app/config.js',
         'app/**/*.js'];

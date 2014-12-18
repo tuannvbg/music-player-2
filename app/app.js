@@ -1,6 +1,7 @@
 (function() {
     angular.module('musicPlayer',[
-        'ngRoute'
+        'ngRoute',
+        'gianarb.deezer'
     ]);
 
     angular.module('musicPlayer').config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider){
