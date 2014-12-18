@@ -31,11 +31,18 @@
             .pipe(gulp.dest('assets/css'));
     });
 
-    // Uglify
+    // JS
+    gulp.task('js', function() {
+      gulp.src(jsFiles)
+        .pipe(concat('app.js'))
+        .pipe(gulp.dest('assets/js'));
+    });
+
+    // Compress
     gulp.task('compress', function() {
       gulp.src(jsFiles)
         .pipe(concat('app.js'))
-        // .pipe(uglify())
+        .pipe(uglify())
         .pipe(gulp.dest('assets/js'));
     });
 
@@ -47,11 +54,10 @@
 
         watch(['app/app.js', 'app/config.js', 'app/**/*.js'], function(){
             gulp.start('compress');
-            livereload();
         });
     });
 
-    gulp.task('build', ['lint', 'compress', 'less']);
-    gulp.task('default', ['compress', 'less', 'watch']);
+    gulp.task('build', ['compress', 'less']);
+    gulp.task('default', ['js', 'less', 'watch']);
 
 })();

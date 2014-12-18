@@ -1,5 +1,7 @@
 (function () {
     angular.module('musicPlayer').controller('PlayerController', [function(){
-        this.message = 'Player-bar';
+      var vm = this;
+      vm.message = 'Player-bar';
+      vm.controls = {};
     }]);
 })();
