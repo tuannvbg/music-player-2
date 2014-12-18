@@ -1,5 +1,5 @@
 (function () {
-    angular.module('music-player').controller('MainCtrl', [function(){
-        this.message = 'Hello Main';
-    }])
+    angular.module('musicPlayer').controller('MainController', ['appSettings', function(appSettings){
+        this.message = appSettings.text;
+    }]);
 })();

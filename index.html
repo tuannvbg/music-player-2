@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="music-player">
+<html lang="en" data-ng-app="musicPlayer">
 <head>
   <meta charset="UTF-8">
   <title>Music player</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-  <data-ng-view></data-ng-view>
+    <a href="/">Main</a>
+    <a href="/login">Login</a>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
+    <data-ng-view></data-ng-view>
+
+    <player class="player-bar"></player>
+
   <script src="assets/js/app.js"></script>
 </body>
 </html>

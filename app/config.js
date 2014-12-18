@@ -1,3 +1,6 @@
 (function () {
-    // body...
+    angular.module('musicPlayer').constant('appSettings',{
+        firebaseUrl : '',
+        text : 'music'
+    });
 })();
