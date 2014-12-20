@@ -5,7 +5,13 @@ build:
   steps:
     # A step that executes `npm install` command
     - npm-install
-    # A step that executes ` bower install` command
-    - bower-install
+
+    - script:
+      # make sure that bower is listed in your package.json
+      # use `npm install --save bower` to add it.
+      name: bower install
+      code: node_modules/bower/bin/bower install
+
+
     # A step that executes ` gulp build` command
     - gulp-build
