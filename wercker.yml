@@ -3,16 +3,16 @@ box: wercker/nodejs
 build:
   # The steps that will be executed on build
   steps:
-    # A step that executes `npm install` command
-    - npm-install
+      # A step that executes `npm install` command
+      - npm-install
 
-    - script:
-      # make sure that bower is listed in your package.json
-      # use `npm install --save bower` to add it.
-      name: bower install
-      code: node_modules/bower/bin/bower install
+      - script:
+          # make sure that bower is listed in your package.json
+          # use `npm install --save bower` to add it.
+          name: bower install
+          code: node_modules/bower/bin/bower install
 
-      # make sure that gulp is listed in your package.json
-      # use `npm install --save gulp` to add it.
-      name: gulp build
-      code: node_modules/gulp/bin/gulp build
+          # make sure that gulp is listed in your package.json
+          # use `npm install --save gulp` to add it.
+          name: gulp build
+          code: node_modules/gulp/bin/gulp build
