@@ -8,5 +8,6 @@ build:
 
       - hgen/bower-install@0.5.7
           - bower-install
-      - hgen/gulp@0.1.3
+
+      - hgen/gulp:
           tasks: build
