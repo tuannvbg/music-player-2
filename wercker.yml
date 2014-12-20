@@ -12,6 +12,7 @@ build:
       name: bower install
       code: node_modules/bower/bin/bower install
 
-
-    # A step that executes ` gulp build` command
-    - gulp-build
+      # make sure that gulp is listed in your package.json
+      # use `npm install --save gulp` to add it.
+      name: gulp build
+      code: node_modules/gulp/bin/gulp build
