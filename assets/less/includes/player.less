@@ -1,0 +1,23 @@
+.background-cover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url('http://rafaell-lycan.github.io/music-player/img/covers/Linkin-Park-Living-Things-300x300.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    .filter( blur(10px) ) ;
+
+    &:before{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: rgba(0,0,0,.3);
+    }
+}

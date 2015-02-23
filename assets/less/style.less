@@ -21,4 +21,54 @@
 
 body{
     font-family: @font;
+    background-color: #eee;
+    margin: 0;
+    padding: 0;
 }
+
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    background-color: #fff;
+    z-index: 1;
+
+    .logo{
+        display: inline-block;
+        margin: 10px 0;
+        color: #999;
+        font-style: italic;
+        text-transform: uppercase;
+    }
+
+    .menu{
+        float: right;
+        display: block;
+
+        li{
+            list-style: none;
+            display: inline-block;
+            text-transform: uppercase;
+
+            &:last-child a{
+                padding-right: 0;
+            }
+        }
+
+        a{
+            text-decoration: none;
+            padding: 0 20px;
+            color: #777;
+        }
+    }
+}
+.container-body{
+    display: none;
+}
+
+@import "includes/player.less";
+@import "includes/sidebar.less";
+@import "includes/player-bar.less";
