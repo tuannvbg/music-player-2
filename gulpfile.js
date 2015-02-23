@@ -6,13 +6,11 @@
     concat = require('gulp-concat'),
     less = require('gulp-less'),
     watch = require('gulp-watch'),
-    livereload = require('gulp-livereload'),
     jshint = require('gulp-jshint');
 
     var jsFiles = [
         'assets/components/angular/angular.js',
         'assets/components/angular-route/angular-route.js',
-        'assets/components/ng-deezer-sdk/deezer.js',
         'app/app.js',
         'app/config.js',
         'app/**/*.js'];
