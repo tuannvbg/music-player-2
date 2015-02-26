@@ -1,4 +1,4 @@
-music-player
+Music Player
 ============
 
-Um simples player usando html5 
+A simple music player using HTML5, JS and plus.
